@@ -6,7 +6,7 @@ import bg from '../../../assets/bg.png'
 
 const RightNav = () => {
     return (
-        <div>
+        <div className='mt-4'>
             <h4>Login With</h4>
             <Button className='my-2' variant="outline-primary"> <FaGoogle /> Login with Google</Button>
             <Button variant="outline-secondary"> <FaGithub /> Login with Github</Button>
