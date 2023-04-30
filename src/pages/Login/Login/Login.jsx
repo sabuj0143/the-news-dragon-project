@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Providers/AuthProvider';
 
 const Login = () => {
-    const {signIn} = useContext(AuthContext);
+    const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/category/0';
 
     const handleLogin = event => {
         event.preventDefault();
@@ -14,14 +17,15 @@ const Login = () => {
         console.log(email, password);
 
         signIn(email, password)
-        .then(result => {
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            form.reset('');
-        })
-        .catch(error => {
-            console.log(error);
-        })
+            .then(result => {
+                const loggedUser = result.user;
+                navigate(from, { replace: true })
+                form.reset('');
+
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
     return (
         <Container className='w-50 mx-auto'>
@@ -44,7 +48,7 @@ const Login = () => {
                 </Button>
                 <br />
                 <Form.Text className="text-success">
-                Dont't Have An Account ? <Link to='/register'><span className="text-danger">Register</span></Link>
+                    Dont't Have An Account ? <Link to='/register'><span className="text-danger">Register</span></Link>
                 </Form.Text>
                 <Form.Text className="text-success">
 
